@@ -1,0 +1,8 @@
+node_modules/
+*~
+*.swp
+*.swo
+*.log
+test*
+notes*
+config.json

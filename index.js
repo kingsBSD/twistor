@@ -50,7 +50,10 @@ const processTweet = tweet => {
 
 console.log(`twistor\nstarting @ ${new Date().toISOString()}`);
 
-sql.init().then(() => console.log("db connected"));
+sql.init().then(() => console.log("db connected"))
+.then(() => sql.select({}))
+.then(results => console.log(JSON.stringify(results,null,"\t")))
+.catch(err => console.log(err));
 
 const stream = T.stream("user");
 stream.on("connected", () => console.log("stream open"));
@@ -80,3 +83,4 @@ stream.on("delete", deletion => {
 	
 	//console.log(JSON.stringify(deletion,null,"\t"))
 });
+

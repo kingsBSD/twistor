@@ -51,6 +51,7 @@ const processTweet = tweet => {
 console.log(`twistor\nstarting @ ${new Date().toISOString()}`);
 
 sql.init().then(() => console.log("db connected"))
+//this seems to work, don't need it in this file tho
 .then(() => sql.select({}))
 .then(results => console.log(JSON.stringify(results,null,"\t")))
 .catch(err => console.log(err));
@@ -70,7 +71,7 @@ stream.on("tweet", tweet => {
 	.then(() => sql.addTweet(ptweet))
 	//TODO don't clutter logs with success messages, simply existing in the db is evidence of success
 	//if I wrap this in a cli module this would be something for a -v flag
-	.then(result => console.log(JSON.stringify(result,null,"\t")))
+	.then(result => console.log(`op:\n${JSON.stringify(result,null,"\t")}\nrows:\n${JSON.stringify(result.rows,null,"\t")}`))
 	.catch(err => console.log(`db add error\nerror:\n${err}\ntweet:\n${JSON.stringify(ptweet,null,"\t")}`));
 
 	console.log(JSON.stringify(ptweet,null,"\t"))
@@ -78,7 +79,7 @@ stream.on("tweet", tweet => {
 
 stream.on("delete", deletion => {
 	sql.addDeletion(deletion.delete)
-	.then(result => console.log(JSON.stringify(result,null,"\t")))
+	.then(result => console.log(`op:\n${JSON.stringify(result,null,"\t")}\nrows:\n${JSON.stringify(result.rows,null,"\t")}`))
 	.catch(err => console.log(`db deletion add error\nerror:\n${err}\nmsg:\n${JSON.stringify(deletion,null,"\t")}`));
 	
 	//console.log(JSON.stringify(deletion,null,"\t"))

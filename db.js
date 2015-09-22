@@ -85,16 +85,21 @@ module.exports = {
 
 	addDeletion: del => exec("INSERT INTO deletions (id,user_id,timestamp_ms,time_diff) VALUES ($1,$2,$3,$3 - (SELECT timestamp_ms FROM tweets WHERE id=$1))", [del.status.id_str,del.status.user_id_str,del.timestamp_ms]),
 
-			 //args: skip n, take n, user_id n, (category, tbd), sort [sorts], asc t/f
+	//args: skip n, take n, u n, (category, tbd), sort [sorts], asc t/f
 	select: args => {
-		const q = `SELECT * FROM users AS u JOIN tweets AS t ON (u.id = t.user_id) JOIN deletions AS d ON (d.id = t.id) ${args.user_id ? "WHERE (u.id = ?) " : ""}ORDER BY $1 ${args.asc ? "ASC" : "DESC"} LIMIT $2 OFFSET $3`;
-		//console.log(q);
+		const q = `SELECT * FROM users AS u JOIN tweets AS t ON (u.id = t.user_id) JOIN deletions AS d ON (d.id = t.id) ${args.u ? "WHERE (u.id = $4) " : ""}ORDER BY $1 ${args.asc ? "ASC" : "DESC"} LIMIT $2 OFFSET $3`;
+		console.log(q);
 
-		let params = args.user_id ? [args.user_id] : [];
-		params.push(R.contains(args.order, sorts) ? args.order : "timestamp_ms");
-		params.push(args.take > 0 && args.take <= 100 && args.take == (args.take|0) ? args.take : 20);
-		params.push(args.skip > 0 && args.skip == (args.skip|0) ? args.skip : 0);
-		//console.log(params);
+		//so it doesn't matter what order they come in
+		//FIXME skip take u all seem to work, sort and asc do not
+		const params = [].concat(
+			R.contains(args.sort, sorts) ? args.sort : "timestamp_ms",
+			args.take > 0 && args.take <= 100 && args.take == (args.take|0) ? args.take : 20,
+			args.skip > 0 && args.skip == (args.skip|0) ? args.skip : 0,
+			args.u ? args.u : []
+		);
+		console.log(args);
+		console.log(params);
 
 		return exec(q, params);
 	}

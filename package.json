@@ -9,10 +9,12 @@
   "author": "alice maz",
   "license": "MIT",
   "dependencies": {
+    "express": "^4.13.3",
     "pg": "^4.4.1",
     "ramda": "^0.17.1",
     "twit": "^2.1.0"
   },
-  "engines" : {
-    "node": "~4.0.0" } 
+  "engines": {
+    "node": "~4.0.0"
+  }
 }

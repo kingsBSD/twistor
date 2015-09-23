@@ -1,6 +1,6 @@
 "use strict";
 
-const R = require("ramda");
+const _ = require("lodash");
 const express = require("express");
 const Twit = require("twit");
 
@@ -23,7 +23,7 @@ const port = 8081;
 exp.get("/api", (req,res) => {
 console.log(req.query);
 	//every arg is optional, defaults to all users skip 0 take 20 orderby time descending
-	let args = R.pick(queryArgs,req.query);
+	let args = _.pick(req.query, queryArgs);
 	args.asc = args.asc && (args.asc == "true" || args.asc == "1");
 
 	sql.select(args)

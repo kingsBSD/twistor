@@ -1,6 +1,6 @@
 "use strict";
 
-const R = require("ramda");
+const _ = require("lodash");
 const Twit = require("twit");
 
 //FIXME this should go in envs
@@ -11,7 +11,7 @@ const T = new Twit(config.tw);
 
 const self = 3717100756;
 
-//after deciding whether to keep a tweet, R.pick this list
+//after deciding whether to keep a tweet, pick this list
 //TODO actually I guess these are unnecessary, I'm just passing references around and choosing fields by name anyway
 //I guess maybe useful for prettyprint but that's kinda it
 const keys = [

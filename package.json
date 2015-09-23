@@ -18,6 +18,6 @@
     "node": "~4.0.0"
   },
   "devDependencies": {
-    "ramda": "^0.17.1"
+    "lodash-fp": "~0.10.2"
   }
 }

@@ -1,9 +1,12 @@
 "use strict";
 
-const config = require("./config.json");
 const R = require("ramda");
 const express = require("express");
-const sql = require("./db.js");
+const Twit = require("twit");
+
+//FIXME this should go in envs
+const config = require("./config.json");
+const sql = require("./lib/postgres.js");
 
 const exp = express();
 
@@ -15,10 +18,15 @@ const queryArgs = [
 	"asc"
 ];
 
+const port = 8081;
+
 exp.get("/api", (req,res) => {
 console.log(req.query);
 	//every arg is optional, defaults to all users skip 0 take 20 orderby time descending
-	const results = sql.select(R.pick(queryArgs,req.query))
+	let args = R.pick(queryArgs,req.query);
+	args.asc = args.asc && (args.asc == "true" || args.asc == "1");
+
+	sql.select(args)
 		.then(results => results.rows)
 		.then(rows => res.send(rows))
 		.catch(err => {
@@ -32,4 +40,5 @@ exp.get("/", (req,res) => {
 	res.send("hello friend");
 });
 
-exp.listen(8081);
+exp.listen(port);
+console.log(`listening on ${port}`);

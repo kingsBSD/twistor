@@ -2,7 +2,7 @@
   "name": "twistor",
   "version": "0.1.0",
   "description": "tweet and tweet deletion archiver",
-  "main": "index.js",
+  "main": "listener.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

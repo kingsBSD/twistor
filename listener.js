@@ -1,10 +1,11 @@
 "use strict";
 
-const config = require("./config.json");
-const Twit = require("twit");
-const throttle = require("lodash/function/throttle");
 const R = require("ramda");
-const sql = require("./db.js");
+const Twit = require("twit");
+
+//FIXME this should go in envs
+const config = require("./config.json");
+const sql = require("./lib/postgres.js");
 
 const T = new Twit(config.tw);
 

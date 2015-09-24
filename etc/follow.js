@@ -5,7 +5,7 @@ const path = require("path");
 const Twit = require("twit");
 const fp = require("lodash-fp");
 
-const T = new Twit(require("./config.json").tw);
+const T = new Twit(require("../config.json").tw);
 
 //obv change this if they ever go away or stop updating their lists but
 //it's a nice set of lists definitely
@@ -18,8 +18,8 @@ const self = 3717100756;
 const slugs = [
 //TODO remember to uncomment these when I set the actual thing up lol
 	"members-of-congress",
-	"presidential-candidates"//,
-//	"governors"
+	"presidential-candidates",
+	"governors"
 ];
 
 //FIXME they are however insufficient, we also need @potus and whatever cabinet/mil/intel heads are on twitter
@@ -40,13 +40,13 @@ const followAll = ids => (fp.first(ids) && (ids => {
 
 const lists = fp.map(getList(cspan),slugs);
 const followings = new Promise((y,n) =>
-	T.get("friends/ids", {user_id: self, count: 5000}, (err,data) => err ? n(err) : y(data.ids)));
+	T.get("friends/ids", {user_id: self, count: 5000, stringify_ids: true}, (err,data) => err ? n(err) : y(data.ids)));
 
 const flatList = Promise.all(lists)
 .then(fp.flow(fp.flatten,fp.uniq))
 .catch(err => console.log(err));
 
 Promise.all([followings,flatList])
-.then(lists => fp.filter(id => fp.includes(id,lists[0]),lists[1]))
+.then(lists => fp.filter(id => !fp.includes(id,lists[0]),lists[1]))
 .then(followAll)
 .catch(err => console.log(err));

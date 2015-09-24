@@ -7,7 +7,26 @@
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.6/angular.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
 	</head>
-	<body>
-		<div ng-controller="ctrl"></div>
+	<body ng-controller="ctrl">
+		<h1>welcome to alice's homepage</h1>
+		<h3>please sign my guestbook</h3>
+
+		<label for="take">take</label>
+		<select id="take" ng-options="take for take in cold.takes track by take" ng-model="opts.take"></select>
+		<label for="sort">sort</label>
+		<select id="sort" ng-model="opts.sort">
+			<option ng-repeat="sort in cold.sorts" value="{{sort.val}}">{{sort.name}}</option>
+		</select>
+		<label for="asc">asc</label>
+		<input id="asc" type="checkbox" ng-model="opts.asc"></input>
+		<label for="handle">@</label>
+		<input id="handle" type="text" placeholder="handle" maxlength="15" ng-model="hot.screen_name"></input>
+		<button id="search" ng-click="search()">search</button>
+		<p>
+
+		{{opts}}
+		{{hot}}
+
+		<script type="text/javascript" src="js/ctrl.js"></script>
 	</body>
 </html>

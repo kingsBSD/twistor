@@ -9,7 +9,7 @@ const config = require("./config.json");
 const sql = require("./lib/postgres.js");
 
 const exp = express();
-exp.use(express.static("site"));
+exp.use(express.static("web/static"));
 
 const queryArgs = [
 	"u",
@@ -37,8 +37,12 @@ console.log(req.query);
 		});
 });
 
+exp.get("/debug", (req,res) => {
+	res.send(req.query);
+});
+
 exp.get("/*", (req,res) => {
-	res.sendFile(__dirname + "/site/index.html");
+	res.sendFile(__dirname + "/web/index.html");
 });
 
 exp.listen(port);

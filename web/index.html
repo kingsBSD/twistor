@@ -2,18 +2,15 @@
 <html lang="en" ng-app="app">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<base href="/">
 		<title>twistor</title>
 		<!--link rel="stylesheet" href="css/style.css"-->
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.6/angular.min.js"></script>
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.6/angular-route.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
 	</head>
 	<body ng-controller="ctrl">
 		<h1>welcome to alice's homepage</h1>
 		<h3>please sign my guestbook</h3>
 
-		<label for="take">take</label>
+		<!--label for="take">take</label>
 		<select id="take" ng-options="take for take in cold.takes track by take" ng-model="opts.take"></select>
 		<label for="sort">sort</label>
 		<select id="sort" ng-model="opts.sort">
@@ -22,13 +19,26 @@
 		<label for="asc">asc</label>
 		<input id="asc" type="checkbox" ng-model="opts.asc"></input>
 		<label for="handle">@</label>
-		<input id="handle" type="text" placeholder="handle" maxlength="15" ng-model="hot.screen_name"></input>
-		<button id="search" ng-click="search()">search</button>
+		<input id="handle" type="text" placeholder="handle" maxlength="15" ng-model="hot.screen_name"></input-->
+		<button id="search" onclick="search()">search</button>
 		<p>
 
 		{{opts}}
 		{{hot}}
 
-		<script type="text/javascript" src="js/ctrl.js"></script>
+		<script>
+			"use strict";
+			const search = function() {
+				const request = new XMLHttpRequest();
+				request.open("GET", "/debug?butt=hi", true);
+				request.onreadystatechange = function() {
+					this.readyState == 4 && this.status >= 200 && this.status < 400 ?
+						console.log(this.responseText) :
+						"";
+				}
+				request.send();
+			};
+		</script>
+		<script type="text/javascript" src="test.js"></script>
 	</body>
 </html>

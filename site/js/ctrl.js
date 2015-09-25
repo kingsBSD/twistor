@@ -1,4 +1,21 @@
-angular.module("app",[]).controller("ctrl", ["$scope", "$http", "$anchorScroll", function ($scope, $http, $anchorScroll) {
+angular.module("app",["ngRoute"])
+.config(function($locationProvider, $routeProvider) {
+	$locationProvider
+	.html5Mode(true);
+
+	$routeProvider
+	.when("/search", {
+		reloadOnSearch: false
+	})
+	.otherwise({
+		redirectTo: "/search",
+		reloadOnSearch: true
+	});
+})
+.controller("ctrl", ["$scope", "$location", "$http", "$anchorScroll", function ($scope, $location, $http, $anchorScroll) {
+
+	console.log($location.url());
+
 	$scope.cold = {
 		takes: [5,10,20,50],
 		sorts: [
@@ -16,9 +33,8 @@ angular.module("app",[]).controller("ctrl", ["$scope", "$http", "$anchorScroll",
 		skip: 0,
 		take: 20,
 		sort: "tweet_time",
-		asc: false
+		asc: false,
+		id: null
 	};
-
-	$scope.search = function() { console.log("butts"); };
 
 }]);

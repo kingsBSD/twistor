@@ -46,4 +46,4 @@ exp.get("/*", (req,res) => {
 });
 
 exp.listen(port);
-console.log(`listening on ${port}`);
+console.log(`twistor server: listening on ${port}`);

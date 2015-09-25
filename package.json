@@ -4,6 +4,7 @@
   "description": "tweet and tweet deletion archiver",
   "main": "listener.js",
   "scripts": {
+  	"dev": "node listener.js & node server.js & babel -w -d web/static/ web/src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "alice maz",

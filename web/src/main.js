@@ -28,22 +28,14 @@ const ajax = (method,target) => {
 };
 
 const lookup = formId => {
-	let inputs = _(document.getElementById(formId))
-		.filter(el => el.type != "button")
-		.map(el => {
-			return {
-				id: el.id,
-				type: el.type,
-				val: el.type == "checkbox" ? el.checked : el.value
-			}
-		})
-		.value();
-
-	//TODO I need to validate the text input and swap to a twitter id
-	//also may as well error on bullshit input, not that garbage here matters to the server
-	const qs = _(inputs)
-		.filter(el => el.id != "handle") //FIXME duh lol
-		.map(el => [el.id,el.val].join("="))
+	let qs = _(document.getElementById(formId))
+		.where({name:"grabthis"})
+		.filter(el => el.val && el.val != "false" && el.val != "0")
+		//FIXME duh lol
+		//TODO also I need to validate the text input and swap to a twitter id
+		//also also may as well error on bullshit input, not that garbage here matters to the server
+		.filter(el => el.id != "handle")
+		.map(el => [el.id,el.type == "checkbox" ? el.checked : el.value].join("="))
 		.join("&");
 
 	//FIXME again, obviously. it's just way past my bedtime rn

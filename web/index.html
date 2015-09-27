@@ -12,7 +12,7 @@
 
 		<form id="topbar">
 			<label for="take">take</label>
-			<select id="take">
+			<select id="take" name="grabthis">
 				<option value="5">5</option>
 				<option value="10">10</option>
 				<option value="20" selected>20</option>
@@ -20,17 +20,17 @@
 			</select>
 
 			<label for="sort">sort</label>
-			<select id="sort">
+			<select id="sort" name="grabthis">
 				<option value="tweet_time">tweet time</option>
 				<option value="delete_time">delete time</option>
 				<option value="time_diff">tweet -&gt; delete time</option>
 			</select>
 
 			<label for="asc">asc</label>
-			<input id="asc" type="checkbox"></input>
+			<input id="asc" type="checkbox" name="grabthis"></input>
 
 			<label for="handle">@</label>
-			<input id="handle" type="text" placeholder="handle" maxlength="15"></input>
+			<input id="handle" type="text" placeholder="handle" maxlength="15" name="grabthis"></input>
 
 			<button id="search" type="button" onclick="lookup('topbar')">search</button>
 		</form>

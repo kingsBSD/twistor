@@ -44,18 +44,78 @@ const lookup = formId => {
 		.catch(err => console.log(err));
 };
 
+const prettyDate = timestamp =>
+	new Date(parseInt(timestamp,10)).toISOString().slice(0,18);
+
+const prettyTime = time => {
+	let s = parseInt(time,10)/1000,
+		m = s/60,
+		h = m/60,
+		d = h/24,
+		M = d/30,
+		y = d/365;
+
+	let xo = (num,word) => {
+		num = Math.round(num);
+		return `~${num} ${word}${num == 1 ? "" : "s"}`;
+	};
+	
+	return m < 1 ? xo(s,"second") :
+		h < 1 ? xo(m,"minute") :
+		d < 1 ? xo(h,"hour") :
+		M < 1 ? xo(d,"day") :
+		y < 1 ? xo(M,"month") :
+				xo(y,"year");
+};
+
+
+const makeRow = result => {
+	let main = dom.elem("tr");
+
+	let av = dom.elem("td");
+	dom.add(av, dom.elem("img",{src: result.avatar}));
+
+	let name = dom.elem("td");
+	dom.add(name,
+		dom.text(result.name),
+		dom.elem("br"),
+		dom.text("@"+result.screen_name)
+	);
+
+	let tweet = dom.elem("td", {rowspan:2,style:"width: 60%;"});
+	dom.add(tweet, dom.text(result.tweet));
+
+	let metadata = dom.elem("td", {rowspan:2,style:"width: 20%;"});
+	dom.add(metadata,
+		dom.text(`tweeted: ${prettyDate(result.tweet_time)}`),
+		dom.elem("br"),
+		dom.text(`deleted: ${prettyDate(result.delete_time)}`),
+		dom.elem("br"),
+		dom.text(prettyTime(result.time_diff)),
+		dom.elem("br")
+//		dom.text("delete time: " + new Date(delete_time*1000))
+	);
+
+	dom.add(main, av, name, tweet, metadata);
+
+	let userDesc = dom.elem("tr");
+
+	let desc = dom.elem("td", {colspan:2});
+	dom.add(desc, dom.text(result.description));
+
+	dom.add(userDesc, desc);
+
+	return [main,userDesc];
+};
+
 const populateTable = results => {
 	let table = dom.get("resultsTable");	
+	dom.drop(table);
 
-	_.each(results, (result,index) => {
-		let tr = document.createElement("tr");
-		//user 
-		let td = document.createElement("td");
-		let txt = document.createTextNode(`hello test ${index}`);
+	let rows = _(results)
+		.map(result => makeRow(result))
+		.flatten()
+		.value();
 
-		td.appendChild(txt);
-		tr.appendChild(td);
-		table.appendChild(tr);
-		table.insertRow().insert
-	});
+	dom.add(table, ...rows);
 };

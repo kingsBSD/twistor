@@ -40,3 +40,5 @@ as for my instance of the bot, I intend to make it a non-trivial amount of work 
 * host images on imgur or something
 * user categories eg congressperson senator bureaucrat (not necessarily hardcoded ofc) for filtering on that
 * archive embedded tweets maybe
+* post method by default + tls once letsencrypt goes live. perhaps https now with a self-signed cert (at a dif url, the browser warning would terrify normals)? 
+* serverside templating as a fallback for folks using noscript. for now just tell them how to form proper urls for the api endpoint

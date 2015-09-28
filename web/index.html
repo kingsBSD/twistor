@@ -4,7 +4,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>twistor</title>
 		<!--link rel="stylesheet" href="css/style.css"-->
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.js"></script>
 	</head>
 	<body ng-controller="ctrl">
 		<h1>welcome to alice's homepage</h1>
@@ -35,6 +35,14 @@
 			<button id="search" type="button" onclick="lookup('topbar')">search</button>
 		</form>
 
+		<hr/>
+
+		<table id="resultsTable" border="1px">
+		</table>
+
+		<div id="testbed"></div>
+
+		<script type="text/javascript" src="dom.js"></script>
 		<script type="text/javascript" src="main.js"></script>
 	</body>
 </html>

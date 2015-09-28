@@ -1,46 +1,27 @@
 "use strict";
 //ooook getting way off topic let's move this to its own file
 
-var dom = {
-	get: function get(id) {
-		return document.getElementById(id);
-	},
-	add: function add(parent) {
-		for (var _len = arguments.length, children = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-			children[_key - 1] = arguments[_key];
-		}
-
-		return children.forEach(function (child) {
-			return parent.appendChild(child);
-		});
-	},
-	elem: function elem(type) {
-		for (var _len2 = arguments.length, attrs = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-			attrs[_key2 - 1] = arguments[_key2];
-		}
-
-		var el = document.createElement(type);
-		attrs.forEach(function (attr) {
-			return Object.keys(attr).forEach(function (key) {
-				return el.setAttribute(key, attr[key]);
-			});
-		});
+const dom = {
+	get: id =>
+		document.getElementById(id),
+	add: (parent, ...children) =>
+		children.forEach(child => parent.appendChild(child)),
+	elem: (type, ...attrs) => {
+		let el = document.createElement(type);
+		attrs.forEach(attr => Object.keys(attr).forEach(key => el.setAttribute(key,attr[key])));
 		return el;
 	},
-	text: function text(txt) {
-		return document.createTextNode(txt);
-	},
-	drop: function drop(parent) {
-		for (var _len3 = arguments.length, children = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
-			children[_key3 - 1] = arguments[_key3];
-		}
-
-		if (children.length === 0) while (parent.firstChild) parent.removeChild(parent.firstChild);else children.forEach(function (child) {
-			return parent.removeChild(child);
-		});
+	text: txt =>
+		document.createTextNode(txt),
+	drop: (parent, ...children) => {
+		if(children.length === 0)
+			while(parent.firstChild)
+				parent.removeChild(parent.firstChild);
+		else
+			children.forEach(child => parent.removeChild(child));
 
 		return parent;
-	}
+	},
 };
 //TEST
 /*
@@ -155,16 +136,16 @@ domme("div")
 //if I go with that prolly integrate stack into the constructor to build it more seamlessly
 //but either way reference becomes a problem unless you build the dom as you traverse
 //enter... Domme Level 3
-var domme = function domme(magic) {
-	var buffer = arguments.length <= 1 || arguments[1] === undefined ? 2048 : arguments[1];
-
-	if (this instanceof domme) {
+const domme = function domme(magic, buffer = 2048) {
+	if(this instanceof domme) {
 		this.R = new Array(buffer);
-		for (var i = 0; i < this.R.length; i++) {
+		for(let i = 0; i < this.R.length; i++)
 			this.R[i] = null;
-		}this.ptr = 0;
+		this.ptr = 0;
 		this.R[0] = this._magic(magic);
-	} else return new domme(magic);
+	}
+	else
+		return new domme(magic);
 };
 
 //PROTIP/FIXME you cannot safely use this with elems with integer ids < buffer size
@@ -173,96 +154,96 @@ var domme = function domme(magic) {
 //tho I guess if you're using this you have yo be careful anyway
 domme.prototype = {
 	//FIXME make sure these actually work right lol, untested
-	l: function l() {
-		var prel = arguments.length <= 0 || arguments[0] === undefined ? 1 : arguments[0];
-
-		if (!Number.isInteger(prel)) throw new Error("no");
-		if (prel < 0) return this.r(prel * -1);
+	l: function(prel = 1) {
+		if(!Number.isInteger(prel))
+			throw new Error("no");
+		if(prel < 0)
+			return this.r(prel * -1);
 
 		this.ptr = this.ptr - prel < 0 ? this.R.length + this.ptr - prel : this.ptr - prel;
 		return this;
 	},
-	r: function r() {
-		var prel = arguments.length <= 0 || arguments[0] === undefined ? 1 : arguments[0];
-
-		if (!Number.isInteger(prel)) throw new Error("please stop");
-		if (prel < 0) return this.l(prel * -1);
-
+	r: function(prel = 1) {
+		if(!Number.isInteger(prel))
+			throw new Error("please stop");
+		if(prel < 0)
+			return this.l(prel * -1);
+		
 		this.ptr = this.ptr + prel >= this.R.length ? this.ptr + prel - this.R.length : this.ptr + prel;
 		return this;
 	},
-	j: function j() {
-		var prel = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
-
-		if (!Number.isInteger(prel) || prel < 0 || prel >= this.R.length) throw new Error("absolutely not");
+	j: function(prel = 0) {
+		if(!Number.isInteger(prel) || prel < 0 || prel >= this.R.length)
+			throw new Error("absolutely not");
 
 		this.ptr = prel;
 		return this;
 	},
-	create: function create(magic) {
-		var prel = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
-
+	create: function(magic, prel = 0) {
 		this.R[this.ptr] = this._magic(magic);
 
 		this.r(prel);
 		return this;
 	},
-	child: function child(magic) {
-		var prel = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
-
-		if (Number.isInteger(magic) && this.R[magic] instanceof Element) this.R[this.ptr].appendChild(this.R[magic]);else this.R[this.ptr].appendChild(this._magic(magic));
-
+	child: function(magic, prel = 0) {
+		if(Number.isInteger(magic) && this.R[magic] instanceof Element)
+			this.R[this.ptr].appendChild(this.R[magic]);
+		else
+			this.R[this.ptr].appendChild(this._magic(magic));
+		
 		this.r(prel);
 		return this;
 	},
 	/*
- img: function(url,alt="") {
- 	let img = document.createElement("img");
- 	img.src = url;
- 	img.alt = img.title = alt;
- 	this.element.appendChild(img);
- 	return this;
- },
- */
-	txt: function txt(text) {
-		var prel = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
-
+	img: function(url,alt="") {
+		let img = document.createElement("img");
+		img.src = url;
+		img.alt = img.title = alt;
+		this.element.appendChild(img);
+		return this;
+	},
+	*/
+	txt: function(text, prel = 0) {
 		this.R[this.ptr].appendChild(document.createTextNode(text));
 
 		this.r(prel);
 		return this;
 	},
 	//TODO prolly use magic here
-	put: function put() {
-		var parent = arguments.length <= 0 || arguments[0] === undefined ? document.body : arguments[0];
-		var prel = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
-
+	put: function(parent = document.body, prel = 0) {
 		parent.appendChild(this.R[this.ptr]);
 
 		this.r(prel);
 		return this;
 	},
 	/*
- push: function() {
- 	this.stack.push(this.element);
- 	return this;
- },
- pop: function() {
- 	this.element = this.stack.pop();
- 	return this;
- },
- cat: function() {
- 	this.stack[this.stack.length - 1].appendChild(this.element);
- 	return this;
- },
- sub: function(magic) {
- 	this.element = domme(magic).element;
- 	return this;
- },
- */
+	push: function() {
+		this.stack.push(this.element);
+		return this;
+	},
+	pop: function() {
+		this.element = this.stack.pop();
+		return this;
+	},
+	cat: function() {
+		this.stack[this.stack.length - 1].appendChild(this.element);
+		return this;
+	},
+	sub: function(magic) {
+		this.element = domme(magic).element;
+		return this;
+	},
+	*/
 	//private methods
-	_magic: function _magic(magic) {
-		if (magic instanceof Element) return magic;else if (document.getElementById(magic)) return document.getElementById(magic);else if (typeof magic === "string") return document.createElement(magic);else throw new Error("what the fuck");
+	_magic: function(magic) {
+		if(magic instanceof Element)
+			return magic;
+		else if(document.getElementById(magic))
+			return document.getElementById(magic);
+		else if(typeof magic === "string")
+			return document.createElement(magic);
+		else
+			throw new Error("what the fuck");
 	}
 };
 /*

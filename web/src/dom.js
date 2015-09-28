@@ -234,11 +234,6 @@ domme.prototype = {
 		return this;
 	},
 	*/
-	lodash: function() {
-		//FIXME set this up for a clean transition back to 
-		_.cache(this);
-		return _.chain(this.R);
-	},
 	//private methods
 	_magic: function(magic) {
 		if(magic instanceof Element)
@@ -251,11 +246,6 @@ domme.prototype = {
 			throw new Error("what the fuck");
 	}
 };
-
-_.mixin({cache: function(domme) { this.domme = domme; },
-	out: function(x) { x.wrapperValue(); return this.domme; },
-	testy: function(wrapped) { console.log(wrapped); return wrapped.value(); }
-},{chain: true});
 
 var x = domme("div")
 .r()
@@ -278,12 +268,4 @@ var y = domme("div")
 .create("div", 1)
 .create("div", 1)
 .create("div", 1)
-.lodash()
-.map(el => {
-	el && el.appendChild(document.createElement("p"));
-	return el;
-})
-
-//.testy();
-//.out();
-//.put();
+.put()

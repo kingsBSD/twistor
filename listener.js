@@ -9,7 +9,10 @@ const sql = require("./lib/postgres.js");
 
 const T = new Twit(config.tw);
 
-const self = 3717100756;
+const sourceRegex = /^<(?:.*?)>(.*)<\/a>$/;
+const selfRegex = /^[0-9]*/;
+
+const self = selfRegex.exec(config.tw.access_token);
 
 //after deciding whether to keep a tweet, pick this list
 //TODO actually I guess these are unnecessary, I'm just passing references around and choosing fields by name anyway
@@ -34,7 +37,7 @@ const ukeys = [
 ];
 
 const processTweet = tweet => {
-	tweet.source = /^<(?:.*?)>(.*)<\/a>$/.exec(tweet.source)[1];
+	tweet.source = sourceRegex.exec(tweet.source)[1];
 
 	return tweet;
 };

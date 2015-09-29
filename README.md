@@ -18,9 +18,9 @@ if you do want to use it at this very moment, you need a postgres db somewhere. 
 }
 ```
 
-postgres port defaults to 5432 everywhere afaik.
+postgres defaults to port 5432 everywhere afaik.
 
-twitter credentials you need to tie a phone number to your account, I just use google voice, but if anonymity is a major concern there are places to buy numbers with bitcoin. go to [apps.twitter.com](https://apps.twitter.com) and create a new app. be aware name and description are public. website can be anything, it doesn't matter. permissions can be read-only if you want (note to self, actually check to make sure this is true lol). generate an access token and you now have all the credentials you need.
+twitter credentials you need to tie a phone number to your account. I just use google voice, but if anonymity is a major concern there are places to buy numbers with bitcoin. go to [apps.twitter.com](https://apps.twitter.com) and create a new app. be aware name and description are public. website can be anything, it doesn't matter. permissions can be read-only if you want (note to self, actually check to make sure this is true lol). generate an access token and you now have all the credentials you need.
 
 `node listener.js` and as long as it's all set up right it will archive every tweet by everyone you follow, excluding protected accounts, retweets, and tweets from... from my test account actually, note to self un-hardcode that number lol. it's (as of 2015/9/21) line 52 if you want to change the exclusions though. it will archive the user on first tweet and deletion messages so long as the deleted tweet has been archived. I'm only storing fields I think are vital (tho I'm open to suggestions on what else may be important). listener.js and lib/postgres.js are the only files that really matter atm. etc/follow.js is just a script I was using to follow everyone on given lists, server.js isn't really anything yet, just a GET to do queries for deletions with a couple params.
 

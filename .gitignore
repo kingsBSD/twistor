@@ -1,5 +1,5 @@
 node_modules/
-web/static/
+web/static/*.js
 *~
 *.swp
 *.swo

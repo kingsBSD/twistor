@@ -73,19 +73,23 @@ const makeRow = result => {
 	let main = dom.elem("tr");
 
 	let av = dom.elem("td");
+	av.className = "av";
 	dom.add(av, dom.elem("img",{src: result.avatar}));
 
 	let name = dom.elem("td");
+	name.className = "name";
 	dom.add(name,
 		dom.text(result.name),
 		dom.elem("br"),
 		dom.text("@"+result.screen_name)
 	);
 
-	let tweet = dom.elem("td", {rowspan:2,style:"width: 60%;"});
+	let tweet = dom.elem("td", {rowspan:2});
+	tweet.className = "tweet";
 	dom.add(tweet, dom.text(result.tweet));
 
-	let metadata = dom.elem("td", {rowspan:2,style:"width: 20%;"});
+	let metadata = dom.elem("td", {rowspan:2});
+	metadata.className = "metadata";
 	dom.add(metadata,
 		dom.text(`tweeted: ${prettyDate(result.tweet_time)}`),
 		dom.elem("br"),

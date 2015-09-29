@@ -33,8 +33,10 @@ as for my instance of the bot, I intend to make it a non-trivial amount of work 
 ##short term plans
 * ~~server.js becomes the backend for a site exposing deletions.~~ bit of polish to do but this is ok
 * ~~simple frontend for said site, obv~~ same
-* tests, simplified deploy, etc
 * ~~table for orphan deletion notices~~
+* tests
+* pretty up the site some
+* user lookup is broken still
 * prep for deploy and do it
 
 ##longer term plans

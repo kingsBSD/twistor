@@ -1,7 +1,31 @@
 table {
-	border: 1px;
+	border: 1px solid black;
+	margin: 10px;
 }
 
 th, td {
+	border: 1px solid black;
 	padding: 5px;
+}
+
+.av {
+	border-right: none;
+	text-align: right;
+}
+
+.name {
+	border-left: none;
+}
+
+.tweet {
+	width: 60%;
+}
+
+.metadata {
+	width: 20%;
+}
+
+#topbar {
+	float: right;
+	margin-right: 20px;
 }

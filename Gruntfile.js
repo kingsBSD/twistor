@@ -29,7 +29,7 @@ module.exports = function(grunt) {
 			options: {
 				sourceMap: true,
 				inSourceMap: "web/static/script.js.map",
-				screwIe8: true
+				screwIE8: true
 			},
 			target: {
 				files: {

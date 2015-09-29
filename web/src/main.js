@@ -21,7 +21,7 @@ const ajax = (method,target) => {
 					N(new Error(`${req.url} failed: ${req.status} ${req.statusText}`));
 				}
 			}
-		}
+		};
 
 		req.send();
 	});
@@ -93,7 +93,6 @@ const makeRow = result => {
 		dom.elem("br"),
 		dom.text(prettyTime(result.time_diff)),
 		dom.elem("br")
-//		dom.text("delete time: " + new Date(delete_time*1000))
 	);
 
 	dom.add(main, av, name, tweet, metadata);

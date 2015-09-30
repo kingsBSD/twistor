@@ -81,7 +81,9 @@ const makeRow = result => {
 	dom.add(name,
 		dom.text(result.name),
 		dom.elem("br"),
-		dom.text("@"+result.screen_name)
+		dom.text(`@${result.screen_name}`),
+		dom.elem("br"),
+		dom.text(`u${result.user_id}`)
 	);
 
 	let tweet = dom.elem("td", {rowspan:2});
@@ -91,11 +93,15 @@ const makeRow = result => {
 	let metadata = dom.elem("td", {rowspan:2});
 	metadata.className = "metadata";
 	dom.add(metadata,
+		dom.text(result.id),
+		dom.elem("br"),
 		dom.text(`tweeted: ${prettyDate(result.tweet_time)}`),
 		dom.elem("br"),
 		dom.text(`deleted: ${prettyDate(result.delete_time)}`),
 		dom.elem("br"),
 		dom.text(prettyTime(result.time_diff)),
+		dom.elem("br"),
+		dom.text(`${result.source}`),
 		dom.elem("br")
 	);
 
@@ -104,6 +110,7 @@ const makeRow = result => {
 	let userDesc = dom.elem("tr");
 
 	let desc = dom.elem("td", {colspan:2});
+	desc.className = "desc";
 	dom.add(desc, dom.text(result.description));
 
 	dom.add(userDesc, desc);

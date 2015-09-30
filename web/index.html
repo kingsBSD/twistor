@@ -1,14 +1,14 @@
 <!doctype html>
-<html lang="en" ng-app="app">
+<html lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>twistor</title>
 		<link rel="stylesheet" href="style.css">
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.js"></script>
 	</head>
-	<body ng-controller="ctrl">
-		<h1>welcome to alice's homepage</h1>
-		<h3>please sign my guestbook</h3>
+	<body>
+	<div id="test">
+		<h1>twistor</h1>
 
 		<form id="topbar">
 			<label for="take">take</label>
@@ -34,8 +34,8 @@
 
 			<button id="search" type="button" onclick="lookup('topbar')">search</button>
 		</form>
-
-		<br/><hr/>
+		</div>
+		<hr/>
 
 		<table id="resultsTable"></table>
 

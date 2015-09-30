@@ -31,7 +31,7 @@ the listener is reasonably safe to use on any account, from twitter's perspectiv
 as for my instance of the bot, I intend to make it a non-trivial amount of work for twitter to find if they really care to kill it, but it's not going to be like, super secret. anyway the easist way for them would probably be to analyze following lists of open streams. I am kind of banking on the free speech contingent in the company sympathizing with the aim, and I have a pet theory that they caved to pressure on politwoops because it was operating with their knowledge and under their aegis. perhaps a semi-anon bot will give them enough to say "oh well what can ya do". but this is just for my convenience (ie, build something simple first and go complicated iff they do actually really want to kill it), and I do have plans for a v2 that would be virtually impossible to shut down if they really are serious about this ~right to be forgotten~ style nonsense.
 
 ##short term plans
-* ~~server.js becomes the backend for a site exposing deletions.~~ bit of polish to do but this is ok
+* ~~server.js becomes the backend for a site exposing deletions~~ bit of polish to do but this is ok
 * ~~simple frontend for said site, obv~~ same
 * ~~table for orphan deletion notices~~
 * tests
@@ -49,3 +49,4 @@ as for my instance of the bot, I intend to make it a non-trivial amount of work 
 * serverside templating as a fallback for folks using noscript. for now just tell them how to form proper urls for the api endpoint
 * grab expanded_url for t.co links and show those (seperate table)
 * package for npm? docker container? something else? I want non-programmers to be able to use this without too much fuss.
+* click thru to view the deleted tweet in context of prev/following tweets on the tl (this requires api... realistically from the user's acct ugh oauth)

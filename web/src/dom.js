@@ -3,16 +3,17 @@
 const dom = {
 	get: id =>
 		document.getElementById(id),
-	add: (parent, ...children) =>
-		children.forEach(child => parent.appendChild(child)),
+	add: (parent, ...children) => {
+		children.forEach(child => parent.appendChild(child))
+		return parent;
+	},
 	elem: (type, ...attrs) => {
 		let el = document.createElement(type);
 		attrs.forEach(attr => Object.keys(attr).forEach(key => el.setAttribute(key,attr[key])));
 		return el;
 	},
-	//FIXME I am 95% sure these replaces are safe but double-check w someone more experienced
 	text: txt =>
-		document.createTextNode(txt
+		document.createTextNode(String(txt)
 			.replace(/&amp;/g,"&")
 			.replace(/&lt;/g,"<")
 			.replace(/&gt;/g,">")

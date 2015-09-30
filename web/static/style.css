@@ -59,3 +59,24 @@ hr {
 	display: block;
 	height: 2em;
 }
+
+#pagenav {
+/*ehhhhh this is kinda annoying and doesnt fit w the vibe
+    position: fixed; 
+    bottom: 0%;
+	width: 10em;
+	border: 1px solid black;
+	background-color: #fff;
+	margin: 5px auto;
+	left: 0;
+	right: 0;
+*/
+	text-align: center;
+	font-size: 1.2em; 
+	margin: 5px;
+}
+
+#pagenav a,
+#pagenav strong {
+	padding: 0 0.5em;
+}

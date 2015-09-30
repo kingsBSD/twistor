@@ -75,7 +75,7 @@ const makeRow = result => {
 };
 
 const populateTable = results => {
-	let table = dom.get("resultsTable");	
+	let table = dom.get("resultstable");	
 	dom.drop(table);
 
 	let rows = _(results.rows)
@@ -84,4 +84,25 @@ const populateTable = results => {
 		.value();
 
 	dom.add(table, ...rows);
+};
+
+const doPageNav = results => {
+	const skip = parseInt(results.skip,10);
+	const take = parseInt(results.take,10);
+	const total = parseInt(results.total,10);
+
+	const pages = (total/take|0) + 1;
+	const page = (skip/take|0) + 1;
+
+	let nav = dom.get("pagenav");
+	dom.drop(nav);
+
+	//TODO rather something like << < 1 2 3 4 > >>
+	const anchors = _.map(_.range(1,pages+1), num =>
+		num == page ? dom.add(dom.elem("strong"), dom.text(num)) : dom.add(dom.elem("a", {
+			href: "javascript:void(0)",
+			onclick: "alert('test');return false;"
+		}), dom.text(num)));
+	
+	dom.add(nav, ...anchors);
 };

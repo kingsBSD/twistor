@@ -41,7 +41,8 @@ const lookup = formId => {
 	console.log(qs);
 
 	//FIXME again, obviously. it's just way past my bedtime rn
-	ajax("GET", "/api?" + qs)
-		.then(populateTable)
-		.catch(err => console.log(err));
+	const results = ajax("GET", "/api?" + qs);
+
+	results.then(populateTable).catch(err => console.log(err));
+	results.then(doPageNav).catch(err => console.log(err));
 };

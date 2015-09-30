@@ -57,7 +57,7 @@ const makeRow = result => {
 		dom.elem("br"),
 		dom.text(prettyTime(result.time_diff)),
 		dom.elem("br"),
-		dom.text(`${result.source}`),
+		dom.text(result.source),
 		dom.elem("br")
 	);
 

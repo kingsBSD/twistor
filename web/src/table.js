@@ -1,49 +1,5 @@
 "use strict";
 
-//alice stdlib lol
-const ajax = (method,target) => {
-	return new Promise((Y,N) => {
-		let req = new XMLHttpRequest();
-
-		req.open(method, target, true);
-
-		req.onreadystatechange = () => {
-			if(req.readyState == 4) { 
-				if(req.status >= 200 && req.status < 400) { 
-					try {
-						let res = JSON.parse(req.response);
-						Y(res);
-					} catch(err) {
-						N(err);
-					}
-				}
-				else {
-					N(new Error(`${req.url} failed: ${req.status} ${req.statusText}`));
-				}
-			}
-		};
-
-		req.send();
-	});
-};
-
-const lookup = formId => {
-	let qs = _(dom.get(formId))
-		.where({name:"grabthis"})
-		.filter(el => el.value)
-		//FIXME duh lol
-		//TODO also I need to validate the text input and swap to a twitter id
-		//also also may as well error on bullshit input, not that garbage here matters to the server
-		.filter(el => el.id != "handle")
-		.map(el => [el.id, el.type == "checkbox" ? el.checked : el.value].join("="))
-		.join("&");
-
-	//FIXME again, obviously. it's just way past my bedtime rn
-	ajax("GET", "/api?" + qs)
-		.then(populateTable)
-		.catch(err => console.log(err));
-};
-
 const prettyDate = timestamp =>
 	new Date(parseInt(timestamp,10)).toISOString().slice(0,18);
 
@@ -83,7 +39,7 @@ const makeRow = result => {
 		dom.elem("br"),
 		dom.text(`@${result.screen_name}`),
 		dom.elem("br"),
-		dom.text(`u${result.user_id}`)
+		dom.text(`id: ${result.user_id}`)
 	);
 
 	let tweet = dom.elem("td", {rowspan:2});
@@ -93,7 +49,7 @@ const makeRow = result => {
 	let metadata = dom.elem("td", {rowspan:2});
 	metadata.className = "metadata";
 	dom.add(metadata,
-		dom.text(result.id),
+		dom.text(`id: ${result.id}`),
 		dom.elem("br"),
 		dom.text(`tweeted: ${prettyDate(result.tweet_time)}`),
 		dom.elem("br"),
@@ -122,7 +78,7 @@ const populateTable = results => {
 	let table = dom.get("resultsTable");	
 	dom.drop(table);
 
-	let rows = _(results)
+	let rows = _(results.rows)
 		.map(result => makeRow(result))
 		.flatten()
 		.value();

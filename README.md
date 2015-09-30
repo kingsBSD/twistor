@@ -50,3 +50,4 @@ as for my instance of the bot, I intend to make it a non-trivial amount of work 
 * grab expanded_url for t.co links and show those (seperate table)
 * package for npm? docker container? something else? I want non-programmers to be able to use this without too much fuss.
 * click thru to view the deleted tweet in context of prev/following tweets on the tl (this requires api... realistically from the user's acct ugh oauth)
+* digging into postgres pagination and finding uh, dragons. seems my naive LIMIT may (profile it later) step thru everything it skips absent an index on each table. this... is not a big deal for a while but it may potentially become one. scale is eh, I dunno if this thing will be popular and on the off chance it is I can worry then. more important is the fact that worst-case gets worse and worse as the db grows, and it grows not slowly. no premature optimization but keep in mind

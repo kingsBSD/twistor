@@ -28,8 +28,7 @@ console.log(req.query);
 	args.asc = args.asc && (args.asc == "true" || args.asc == "1");
 
 	sql.select(args)
-		.then(results => results.rows)
-		.then(rows => res.send(rows))
+		.then(results => res.send(results))
 		.catch(err => {
 			//FIXME this is hardly "handling" errors lol
 			console.log(err)

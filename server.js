@@ -45,4 +45,4 @@ exp.get("/*", (req,res) => {
 });
 
 exp.listen(port);
-console.log(`twistor server: listening on ${port}`);
+console.log(`twistor v${require("./package.json").version}\n${new Date().toISOString()}\nserver @ ${require("os").hostname()}:${port}`);

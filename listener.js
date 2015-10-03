@@ -45,12 +45,12 @@ const processTweet = tweet => {
 
 //---------
 
-console.log(`twistor\nstarting @ ${new Date().toISOString()}`);
+console.log(`twistor v${require("./package.json").version}\n${new Date().toISOString()}`);
 
 sql.init().then(() => console.log("db connected"));
 const stream = T.stream("user");
 
-stream.on("connected", () => console.log("listener stream open"));
+stream.on("connected", () => console.log("stream open\nlistening..."));
 
 stream.on("tweet", tweet => {
 	if(tweet.user.id == self || tweet.retweeted_status || tweet.user.protected == true)

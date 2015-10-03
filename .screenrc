@@ -1,10 +1,10 @@
 # TODO lol organize this shit better imo
 startup_message off
 split -v
-screen node_modules/.bin/nodemon server.js -w server.js -w lib/postgres.js
+screen -t 'server' node_modules/.bin/nodemon server.js -w server.js -w lib/postgres.js
 split
 focus down
-screen node_modules/.bin/nodemon listener.js -w listener.js -w lib/postgres.js
+screen -t 'listener' node_modules/.bin/nodemon listener.js -w listener.js -w lib/postgres.js
 focus right
 split 
 focus up

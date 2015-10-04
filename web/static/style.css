@@ -74,6 +74,7 @@ hr {
 	text-align: center;
 	font-size: 1.2em; 
 	margin: 5px;
+	white-space: pre;
 }
 
 #pagenav a,

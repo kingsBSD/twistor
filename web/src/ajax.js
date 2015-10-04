@@ -25,24 +25,3 @@ const ajax = (method,target) => {
 		req.send();
 	});
 };
-
-const parseForm = formId => {
-	let state = _(dom.get(formId))
-		.where({name:"grabthis"})
-		.filter(el => el.value)
-		//FIXME duh lol
-		//TODO also I need to validate the text input and swap to a twitter id
-		//also also may as well error on bullshit input, not that garbage here matters to the server
-		.map(el => [el.id, el.type == "checkbox" ? el.checked : el.value])
-		.filter(pair => pair[1])
-		.object()
-		.value();
-
-	url.rewrite(state);
-
-	//FIXME again, obviously. it's just way past my bedtime rn
-	const results = ajax("GET", `/api${location.search}`);
-
-	results.then(populateTable).catch(err => console.log(err));
-	results.then(makePageNav).catch(err => console.log(err));
-};

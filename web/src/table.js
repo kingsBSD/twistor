@@ -75,8 +75,12 @@ const makeRow = result => {
 };
 
 const populateTable = results => {
-	let table = dom.get("resultstable");	
-	dom.drop(table);
+	window.scroll(0,0);
+	let div = dom.get("resultstable");	
+	dom.drop(div);
+
+	let table = dom.elem("table");
+	dom.add(div, table);
 
 	const rows = _(results.rows)
 		.map(result => makeRow(result))
@@ -98,7 +102,7 @@ const makePageNav = results => {
 	dom.drop(nav);
 
 	const displayedPages = _([page])
-		.zip(_.range(1,page), _.range(page+1,pages+1))
+		.zip(_.range(page-1,0,-1), _.range(page+1,pages+1))
 		.flatten()
 		.compact()
 		.slice(0,10)
@@ -109,11 +113,20 @@ const makePageNav = results => {
 
 	//TODO rather something like << < 1 2 3 4 > >>
 	const anchors = [].concat(
-
+		page > 1 ? dom.aclick(`url.page(0)`, "&lt;&lt;") : dom.text("&lt;&lt;   "),
+		page > 1 ? dom.aclick(`url.page(${(page-2)*take})`, "&lt;") : dom.text("&lt; "),
 		_.map(displayedPages, num =>
 			num == page ? dom.add(dom.elem("strong"), dom.text(num)) : 
-				dom.aclick(`alert(${num})`, num))
+				dom.aclick(`url.page(${(num-1)*take})`, num)),
+		page < pages ? dom.aclick(`url.page(${page*take})`, "&gt;") : dom.text(" &gt;"),
+		page < pages ? dom.aclick(`url.page(${(pages-1)*take})`, "&gt;&gt;") : dom.text("   &gt;&gt;")
 	);
 		
-	dom.add(nav, ...anchors);
+	dom.add(nav, dom.elem("hr"), ...anchors);
+};
+
+const dumpTable = () => {
+	window.scroll(0,0);
+	dom.drop(dom.get("resultstable"));
+	dom.drop(dom.get("pagenav"));
 };

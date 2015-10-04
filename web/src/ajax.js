@@ -26,8 +26,8 @@ const ajax = (method,target) => {
 	});
 };
 
-const lookup = formId => {
-	let pairs = _(dom.get(formId))
+const parseForm = formId => {
+	let state = _(dom.get(formId))
 		.where({name:"grabthis"})
 		.filter(el => el.value)
 		//FIXME duh lol
@@ -35,14 +35,14 @@ const lookup = formId => {
 		//also also may as well error on bullshit input, not that garbage here matters to the server
 		.map(el => [el.id, el.type == "checkbox" ? el.checked : el.value])
 		.filter(pair => pair[1])
+		.object()
 		.value();
 
-	let qs = _.map(pairs, pair => pair.join("=")).join("&");
-	console.log(qs);
+	url.rewrite(state);
 
 	//FIXME again, obviously. it's just way past my bedtime rn
-	const results = ajax("GET", "/api?" + qs);
+	const results = ajax("GET", `/api${location.search}`);
 
 	results.then(populateTable).catch(err => console.log(err));
-	results.then(doPageNav).catch(err => console.log(err));
+	results.then(makePageNav).catch(err => console.log(err));
 };

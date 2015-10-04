@@ -27,4 +27,11 @@ const dom = {
 
 		return parent;
 	},
+	//eh this is inconsistant but I'm not gonna refactor just for this
+	//there should be better sementics to avoid "dom.add(dom.elem" tho
+	aclick: (clickfn, txt) =>
+		dom.add(dom.elem("a", {
+			href: "javascript:void(0)",
+			onclick: `${clickfn};return false;`
+		}), dom.text(txt))
 };

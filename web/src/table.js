@@ -78,7 +78,7 @@ const populateTable = results => {
 	let table = dom.get("resultstable");	
 	dom.drop(table);
 
-	let rows = _(results.rows)
+	const rows = _(results.rows)
 		.map(result => makeRow(result))
 		.flatten()
 		.value();
@@ -86,7 +86,7 @@ const populateTable = results => {
 	dom.add(table, ...rows);
 };
 
-const doPageNav = results => {
+const makePageNav = results => {
 	const skip = parseInt(results.skip,10);
 	const take = parseInt(results.take,10);
 	const total = parseInt(results.total,10);
@@ -97,12 +97,23 @@ const doPageNav = results => {
 	let nav = dom.get("pagenav");
 	dom.drop(nav);
 
+	const displayedPages = _([page])
+		.zip(_.range(1,page), _.range(page+1,pages+1))
+		.flatten()
+		.compact()
+		.slice(0,10)
+		.sortBy()
+		.value();
+
+	console.log(displayedPages);
+
 	//TODO rather something like << < 1 2 3 4 > >>
-	const anchors = _.map(_.range(1,pages+1), num =>
-		num == page ? dom.add(dom.elem("strong"), dom.text(num)) : dom.add(dom.elem("a", {
-			href: "javascript:void(0)",
-			onclick: "alert('test');return false;"
-		}), dom.text(num)));
-	
+	const anchors = [].concat(
+
+		_.map(displayedPages, num =>
+			num == page ? dom.add(dom.elem("strong"), dom.text(num)) : 
+				dom.aclick(`alert(${num})`, num))
+	);
+		
 	dom.add(nav, ...anchors);
 };

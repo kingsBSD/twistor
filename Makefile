@@ -2,7 +2,7 @@ PATH := node_modules/.bin:$(PATH)
 SHELL := /bin/bash
 
 js_src := web/src/*.js
-js_dest := web/static/script.js
+js_dest := web/build/script.js
 
 .PHONY: all clean
 
@@ -19,9 +19,5 @@ $(js_dest): $(js_src)
 # test: $(js_src)
 #	eslint $(js_src)
 
-# TODO mm in theory this should be deleting a full dir of build files
-# static actually has shit I work on in it tho
-# prolly best to just copy css to there from src with make?
-# eh I guess the project isn't complicated atm, no real problem to solve yet
 clean:
-	rm web/static/script.js
+	rm -rf web/build

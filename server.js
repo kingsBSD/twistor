@@ -10,6 +10,7 @@ const sql = require("./lib/postgres.js");
 
 const exp = express();
 exp.use(express.static("web/static"));
+exp.use(express.static("web/build"));
 
 const queryArgs = [
 	"u",

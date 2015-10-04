@@ -1,6 +1,5 @@
 node_modules/
-web/static/*.js
-web/static/*.js.map
+web/build/
 *~
 *.swp
 *.swo

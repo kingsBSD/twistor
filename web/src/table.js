@@ -109,8 +109,6 @@ const makePageNav = results => {
 		.sortBy()
 		.value();
 
-	console.log(displayedPages);
-
 	//TODO rather something like << < 1 2 3 4 > >>
 	const anchors = [].concat(
 		page > 1 ? dom.aclick(`url.page(0)`, "&lt;&lt;") : dom.text("&lt;&lt;   "),

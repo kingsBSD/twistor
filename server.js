@@ -22,7 +22,7 @@ const queryArgs = [
 
 const port = 8081;
 
-exp.get("/api", (req,res) => {
+exp.get("/api/search", (req,res) => {
 console.log(req.query);
 	//every arg is optional, defaults to all users skip 0 take 20 orderby time descending
 	let args = _.pick(req.query, queryArgs);
@@ -32,9 +32,19 @@ console.log(req.query);
 		.then(results => res.send(results))
 		.catch(err => {
 			//FIXME this is hardly "handling" errors lol
-			console.log(err)
-			res.status(500).send([]);
+			console.log(err);
+			res.status(500).send({});
 		});
+});
+
+exp.get("/api/userid", (req,res) => {
+	const uname = req.query.uname;
+
+	/^[a-zA-Z0-9_]{1,15}$/.test(uname) ?
+		sql.snToUid(uname)
+			.then(results => res.send(results))
+			.catch(err => res.status(err == 404 ? 404 : 500).send({u:""})) :
+		res.status(400).send({u:""});
 });
 
 exp.get("/debug", (req,res) => {

@@ -63,12 +63,13 @@ stream.on("tweet", tweet => {
 	.then(() => sql.addTweet(ptweet))
 	.catch(err => console.log(`db add error\n${err}\ntweet:\n${JSON.stringify(ptweet,null,"\t")}`));
 
-	console.log(JSON.stringify(ptweet,null,"\t"))
+	//console.log(JSON.stringify(ptweet,null,"\t"))
+	console.log(`@${ptweet.user.screen_name}: ${ptweet.text}`);
 });
 
 stream.on("delete", deletion => {
 	sql.addDeletion(deletion.delete)
-	//TODO seperate table for orphaned deletes imo
-	//for now the fkey will fail and it'll go to logs at least
 	.catch(err => console.log(`db deletion add error\n${err}\nmsg:\n${JSON.stringify(deletion,null,"\t")}`));
+
+	console.log(`delete: ${deletion.delete.id_str}`);
 });

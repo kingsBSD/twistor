@@ -29,6 +29,9 @@ console.log(req.query);
 	args.asc = args.asc && (args.asc == "true" || args.asc == "1");
 
 	sql.select(args)
+		//FIXME this might be leaking stack traces to frontend? idk how, but
+		//oh wait, no, it could be throwing somewhere and hitting express... hrm
+		//obv test lol
 		.then(results => res.send(results))
 		.catch(err => {
 			//FIXME this is hardly "handling" errors lol

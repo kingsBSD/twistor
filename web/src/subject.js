@@ -10,7 +10,7 @@ const subject = {
 		subject.checkName(this.value)
 			.then(result => {
 				subject.img.src = "ok.png";
-				console.log(result);
+				//console.log(result);
 			})
 			.catch(err => subject.img.src = err === "" ? "ok.png" : "nogood.png");
 	}, 1000/2),

@@ -17,13 +17,10 @@ const url = {
 		url.rewrite(state);
 		url.go();
 	},
-	submit: formId => {
-		let state = _(dom.get(formId))
+	submit: () => {
+		let state = _(dom.get("topbar"))
 			.where({name:"grabthis"})
 			.filter(el => el.value)
-			//FIXME duh lol
-			//TODO also I need to validate the text input and swap to a twitter id
-			//also also may as well error on bullshit input, not that garbage here matters to the server
 			.map(el => [el.id == "handle" ? "u" : el.id, el.type == "checkbox" ? el.checked : el.value])
 			.filter(pair => pair[1])
 			.object()
@@ -58,8 +55,8 @@ const url = {
 
 window.onpopstate = evt => url.go();
 
+dom.get("search").addEventListener("click",url.submit,false);
 dom.get("handle").addEventListener("input",subject.handle,false);
 dom.get("handle").addEventListener("input",subject.imgClear,false);
-//oninput="subject.handle('handle')" name="grabthis"
 
 url.onload();

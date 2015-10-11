@@ -46,12 +46,8 @@ exp.get("/api/userid", (req,res) => {
 	/^[a-zA-Z0-9_]{1,15}$/.test(uname) ?
 		sql.snToUid(uname)
 			.then(results => res.send(results))
-			.catch(err => res.status(err == 404 ? 404 : 500).send({u:""})) :
+			.catch(err => res.status(err == 204 ? 204 : 500).send({u:""})) :
 		res.status(400).send({u:""});
-});
-
-exp.get("/debug", (req,res) => {
-	res.send(req.query);
 });
 
 exp.get("/*", (req,res) => {

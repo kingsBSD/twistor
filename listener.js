@@ -14,28 +14,6 @@ const selfRegex = /^[0-9]*/;
 
 const self = selfRegex.exec(config.tw.access_token);
 
-//after deciding whether to keep a tweet, pick this list
-//TODO actually I guess these are unnecessary, I'm just passing references around and choosing fields by name anyway
-//I guess maybe useful for prettyprint but that's kinda it
-const keys = [
-	"id_str",
-	"text",
-	"source",
-	"in_reply_to_status_id_str",
-	"user",
-	"lang",
-	"timestamp_ms"
-];
-
-const ukeys = [
-	"id_str",
-	"name",
-	"screen_name",
-	"description",
-	"verified",
-	"profile_image_url"
-];
-
 const processTweet = tweet => {
 	tweet.source = sourceRegex.exec(tweet.source)[1];
 
@@ -71,5 +49,5 @@ stream.on("delete", deletion => {
 	sql.addDeletion(deletion.delete)
 	.catch(err => console.log(`db deletion add error\n${err}\nmsg:\n${JSON.stringify(deletion,null,"\t")}`));
 
-	console.log(`delete: ${deletion.delete.id_str}`);
+	console.log(`delete: ${deletion.delete.status.id_str}`);
 });

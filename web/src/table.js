@@ -1,7 +1,7 @@
 "use strict";
 
 const prettyDate = timestamp =>
-	new Date(parseInt(timestamp,10)).toISOString().slice(0,18);
+	new Date(parseInt(timestamp,10)).toISOString().slice(0,19);
 
 const prettyTime = time => {
 	let s = parseInt(time,10)/1000,

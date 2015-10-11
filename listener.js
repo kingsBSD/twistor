@@ -1,6 +1,7 @@
 "use strict";
 
 const _ = require("lodash");
+const Promise = require("bluebird");
 const Twit = require("twit");
 
 //FIXME this should go in envs

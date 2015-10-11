@@ -13,6 +13,7 @@
     "url": "https://github.com/alicemaz/twistor.git"
   },
   "dependencies": {
+    "bluebird": "^2.10.2",
     "express": "^4.13.3",
     "lodash": "^3.10.1",
     "pg": "^4.4.1",

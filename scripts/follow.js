@@ -6,6 +6,7 @@
 "use strict";
 
 const _ = require("lodash");
+const Promise = require("bluebird");
 const Twit = require("twit");
 
 const config = require("../config.json");

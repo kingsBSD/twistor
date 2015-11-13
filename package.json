@@ -1,11 +1,11 @@
 {
   "name": "twistor",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "tweet and tweet deletion archiver",
   "main": "listener.js",
   "scripts": {
     "dev": "screen -c .screenrc",
-	"make": "while true; do make; sleep 2; done"
+    "make": "while true; do make; sleep 2; done"
   },
   "author": "alice maz",
   "license": "MIT",

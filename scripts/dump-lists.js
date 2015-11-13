@@ -22,7 +22,8 @@ const slugs = {
 	house: "us-house",
 	cabinet: "us-cabinet",
 	governors: "us-governors",
-	mayors: "us-cities"
+	mayors: "us-cities",
+	candidates: "presidential-candidates"
 };
 
 const keyFilter = [

@@ -18,16 +18,46 @@ const queryArgs = [
 	"skip",
 	"take",
 	"sort",
-	"asc"
+	"asc",
+	"cat"
 ];
+
+const sorts = [
+	"tweet_time",
+	"delete_time",
+	"time_diff"
+];
+
+const cats = [
+	"senate",
+	"house",
+	"cabinet",
+	"governors",
+	"mayors",
+	"candidates"
+];
+
+const parseQuery = raw => {
+	let finished = {};
+
+	finished.take = raw.take > 0 && raw.take <= 50 && raw.take == (raw.take|0) ? raw.take : 20;
+	finished.skip = raw.skip > 0 && raw.skip == (raw.skip|0) ? raw.skip : 0;
+	finished.sort = _.find(sorts, sort => sort == raw.sort) || "delete_time";
+	finished.asc = raw.asc && (raw.asc == "true" || raw.asc == "1");
+
+	if(raw.u)
+		finished.u = raw.u;
+	if(raw.cat && _.contains(cats, raw.cat))
+		finished.cat = raw.cat;
+
+	return finished;
+};
 
 const port = 8081;
 
 exp.get("/api/search", (req,res) => {
-console.log(req.query);
 	//every arg is optional, defaults to all users skip 0 take 20 orderby time descending
-	let args = _.pick(req.query, queryArgs);
-	args.asc = args.asc && (args.asc == "true" || args.asc == "1");
+	const args = parseQuery(req.query);
 
 	sql.select(args)
 		//FIXME this might be leaking stack traces to frontend? idk how, but

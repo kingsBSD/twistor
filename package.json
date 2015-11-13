@@ -4,7 +4,8 @@
   "description": "tweet and tweet deletion archiver",
   "main": "listener.js",
   "scripts": {
-    "dev": "screen -c .screenrc"
+    "dev": "screen -c .screenrc",
+	"make": "while true; do make; sleep 2; done"
   },
   "author": "alice maz",
   "license": "MIT",
